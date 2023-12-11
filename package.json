@@ -1,0 +1,19 @@
+{
+  "name": "semver-regex-range",
+  "version": "1.0.0",
+  "description": "Tests whether a semver version string fits within a range using regex.",
+  "main": "index.ts",
+  "repository": "git@github.com:tian000/semver-regex-range.git",
+  "author": "tian000 <14320466+tian000@users.noreply.github.com>",
+  "license": "Apache",
+  "private": false,
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "to-regex-range": "^5.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "is-number": "^7.0.0"
+  }
+}
