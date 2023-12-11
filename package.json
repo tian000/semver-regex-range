@@ -10,11 +10,13 @@
   "devDependencies": {
     "@types/node": "^20.10.4",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "esbuild": "^0.19.9",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^42.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
+    "http-server": "^14.1.1",
     "to-regex-range": "^5.0.1",
     "ts-node": "^10.9.2",
     "typescript": "*",
@@ -26,6 +28,7 @@
   "scripts": {
     "test": "vitest",
     "lint": "eslint .",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "build": "esbuild --minify --bundle ./injectOnGlobal.ts |  node -e \"$(cat <<EOF\nconst {readFile, writeFile} = require('fs');\n\nreadFile('./index.html', 'utf-8', function (err, contents) {\n    if (err) {\n        console.log(err);\n        return;\n    }\n    const startMarker = '<!--START INJECT ON GLOBAL--><script>';\n    const endMarker = '</script><!--END INJECT ON GLOBAL-->';\n    const startIndex = contents.indexOf(startMarker);\n    const endIndex = contents.indexOf(endMarker) + endMarker.length;\n\n    readFile(0, function (err, inputStreamContents) {\n        if (err) {\n            console.log(err);\n            return;\n        }\n\n        const replaced =\n            contents.substring(0, startIndex)\n            + startMarker\n            + inputStreamContents\n            + endMarker + contents.substring(endIndex);\n\n        writeFile('./index.html', replaced, 'utf-8', function (err) {\n            if (err) {\n                console.log(err);\n            } else {\n                console.log('Done!');\n            }\n        });\n    })\n});\nEOF\n)\""
   }
 }

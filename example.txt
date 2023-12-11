@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Semver Regex Range Generator</title>
+    <!--The build script in package.json will replace the below script tag with a bundled version of injectOnGlobal.ts-->
+    <!--START INJECT ON GLOBAL--><script>"use strict";(()=>{var E=Object.create;var v=Object.defineProperty;var C=Object.getOwnPropertyDescriptor;var F=Object.getOwnPropertyNames;var L=Object.getPrototypeOf,W=Object.prototype.hasOwnProperty;var R=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports);var A=(e,t,n,r)=>{if(t&&typeof t=="object"||typeof t=="function")for(let i of F(t))!W.call(e,i)&&i!==n&&v(e,i,{get:()=>t[i],enumerable:!(r=C(t,i))||r.enumerable});return e};var I=(e,t,n)=>(n=e!=null?E(L(e)):{},A(t||!e||!e.__esModule?v(n,"default",{value:e,enumerable:!0}):n,e));var m=R((_,w)=>{"use strict";w.exports=function(e){return typeof e=="number"?e-e===0:typeof e=="string"&&e.trim()!==""?Number.isFinite?Number.isFinite(+e):isFinite(+e):!1}});var T=R((k,G)=>{"use strict";var P=m(),g=(e,t,n)=>{if(P(e)===!1)throw new TypeError("toRegexRange: expected the first argument to be a number");if(t===void 0||e===t)return String(e);if(P(t)===!1)throw new TypeError("toRegexRange: expected the second argument to be a number.");let r={relaxZeros:!0,...n};typeof r.strictZeros=="boolean"&&(r.relaxZeros=r.strictZeros===!1);let i=String(r.relaxZeros),s=String(r.shorthand),o=String(r.capture),a=String(r.wrap),f=e+":"+t+"="+i+s+o+a;if(g.cache.hasOwnProperty(f))return g.cache[f].result;let u=Math.min(e,t),l=Math.max(e,t);if(Math.abs(u-l)===1){let p=e+"|"+t;return r.capture?`(${p})`:r.wrap===!1?p:`(?:${p})`}let h=N(e)||N(t),c={min:e,max:t,a:u,b:l},d=[],$=[];if(h&&(c.isPadded=h,c.maxLen=String(c.max).length),u<0){let p=l<0?Math.abs(l):1;$=M(p,Math.abs(u),c,r),u=c.a=0}return l>=0&&(d=M(u,l,c,r)),c.negatives=$,c.positives=d,c.result=K($,d,r),r.capture===!0?c.result=`(${c.result})`:r.wrap!==!1&&d.length+$.length>1&&(c.result=`(?:${c.result})`),g.cache[f]=c,c.result};function K(e,t,n){let r=S(e,t,"-",!1,n)||[],i=S(t,e,"",!1,n)||[],s=S(e,t,"-?",!0,n)||[];return r.concat(s).concat(i).join("|")}function Q(e,t){let n=1,r=1,i=x(e,n),s=new Set([t]);for(;e<=i&&i<=t;)s.add(i),n+=1,i=x(e,n);for(i=j(t+1,r)-1;e<i&&i<=t;)s.add(i),r+=1,i=j(t+1,r)-1;return s=[...s],s.sort(J),s}function B(e,t,n){if(e===t)return{pattern:e,count:[],digits:0};let r=H(e,t),i=r.length,s="",o=0;for(let a=0;a<i;a++){let[f,u]=r[a];f===u?s+=f:f!=="0"||u!=="9"?s+=U(f,u,n):o++}return o&&(s+=n.shorthand===!0?"\\d":"[0-9]"),{pattern:s,count:[o],digits:i}}function M(e,t,n,r){let i=Q(e,t),s=[],o=e,a;for(let f=0;f<i.length;f++){let u=i[f],l=B(String(o),String(u),r),h="";if(!n.isPadded&&a&&a.pattern===l.pattern){a.count.length>1&&a.count.pop(),a.count.push(l.count[0]),a.string=a.pattern+Z(a.count),o=u+1;continue}n.isPadded&&(h=V(u,n,r)),l.string=h+l.pattern+Z(l.count),s.push(l),o=u+1,a=l}return s}function S(e,t,n,r,i){let s=[];for(let o of e){let{string:a}=o;!r&&!y(t,"string",a)&&s.push(n+a),r&&y(t,"string",a)&&s.push(n+a)}return s}function H(e,t){let n=[];for(let r=0;r<e.length;r++)n.push([e[r],t[r]]);return n}function J(e,t){return e>t?1:t>e?-1:0}function y(e,t,n){return e.some(r=>r[t]===n)}function x(e,t){return Number(String(e).slice(0,-t)+"9".repeat(t))}function j(e,t){return e-e%Math.pow(10,t)}function Z(e){let[t=0,n=""]=e;return n||t>1?`{${t+(n?","+n:"")}}`:""}function U(e,t,n){return`[${e}${t-e===1?"":"-"}${t}]`}function N(e){return/^-?(0+)\d/.test(e)}function V(e,t,n){if(!t.isPadded)return e;let r=Math.abs(t.maxLen-String(e).length),i=n.relaxZeros!==!1;switch(r){case 0:return"";case 1:return i?"0?":"0";case 2:return i?"0{0,2}":"00";default:return i?`0{0,${r}}`:`0{${r}}`}}g.cache={};g.clearCache=()=>g.cache={};G.exports=g});var z=I(T()),b=e=>{let t=e.toString(),n=t.length,r=new Array(n).fill(9).join(""),i=(0,z.default)(t,r,{capture:!1,wrap:!1}),s=`[1-9][0-9]{${n},}`;return i+"|"+s},q=(e,t,n)=>{let r=`(${b(e+1)})`,i=`(${b(t+1)})`,s=`(${b(n+1)})`,o="(0|[1-9][0-9]*)",a=`(${r}\\.${o}(\\.${o})+)`,f=`(${e.toString()}\\.${i}(\\.${o})+)`,u=`(${e.toString()}\\.${t.toString()}\\.${s}(\\.${o})*)`,l=`(${e.toString()}\\.${t.toString()}\\.${n.toString()}(\\.0)*)`;return[a,f,u,l].reverse().join("|")};function X(e){let t="((0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))+)";return`(?!(${e}))`+t}function D(e,t){let n=q(e.major,e.minor,e.patch);if(t==null)return n;let r=X(q(t.major,t.minor,t.patch));return`(?=(${n}))(${r})`}globalThis.toSemverRange=D;})();
+/*! Bundled license information:
+
+is-number/index.js:
+  (*!
+   * is-number <https://github.com/jonschlinkert/is-number>
+   *
+   * Copyright (c) 2014-present, Jon Schlinkert.
+   * Released under the MIT License.
+   *)
+
+to-regex-range/index.js:
+  (*!
+   * to-regex-range <https://github.com/micromatch/to-regex-range>
+   *
+   * Copyright (c) 2015-present, Jon Schlinkert.
+   * Released under the MIT License.
+   *)
+*/
+</script><!--END INJECT ON GLOBAL-->
+    <script>
+        function isNumber(n) {
+            return !isNaN(parseInt(n)) && isFinite(n);
+        }
+
+        function onGenerateClick() {
+            let major = document.getElementById("major").value;
+            let minor = document.getElementById("minor").value;
+            let patch = document.getElementById("patch").value;
+
+            // Make sure they are all numbers
+            if (!isNumber(major) || !isNumber(minor) || !isNumber(patch)) {
+                alert("Please enter a number for each field");
+                return;
+            }
+
+            const outputLines = [
+                `SemVer range: `,
+                `>= ${major}.${minor}.${patch}`,
+                `Regex:`,
+                `^${globalThis.toSemverRange({major: Number(major), minor: Number(minor), patch: Number(patch)})}$`
+            ];
+
+            document.getElementById("output-area").innerText = outputLines.join("\n");
+        }
+
+        function onBoundedGenerateClick() {
+            let minmajor = document.getElementById("minmajor").value;
+            let minminor = document.getElementById("minminor").value;
+            let minpatch = document.getElementById("minpatch").value;
+            let maxmajor = document.getElementById("maxmajor").value;
+            let maxminor = document.getElementById("maxminor").value;
+            let maxpatch = document.getElementById("maxpatch").value;
+
+            // Make sure they are all numbers
+            if (!isNumber(minmajor) || !isNumber(minminor) || !isNumber(minpatch) || !isNumber(maxmajor) || !isNumber(maxminor) || !isNumber(maxpatch)) {
+                alert("Please enter a number for each field");
+                return;
+            }
+
+            const outputLines = [
+                `SemVer range: `,
+                `${minmajor}.${minminor}.${minpatch} < x <= ${maxmajor}.${maxminor}.${maxpatch}`,
+                `Regex:`,
+                `^${globalThis.toSemverRange(
+                    {major: Number(minmajor), minor: Number(minminor), patch: Number(minpatch)},
+                    {major: Number(maxmajor), minor: Number(maxminor), patch: Number(maxpatch)}
+                )}$`
+            ];
+
+            document.getElementById("bounded-output-area").innerText = outputLines.join("\n");
+        }
+    </script>
+</head>
+<body>
+<h1>Semver Regex Range Generator</h1>
+<div>
+    <h2>Greater than or equal to, e.g. >=23.19.0 </h2>
+    <form>
+        <label for="major">major</label>
+        <input type="text" name="version" id="major"/>
+        <br/>
+        <label for="minor">minor</label>
+        <input type="text" name="version" id="minor"/>
+        <br/>
+        <label for="patch">patch</label>
+        <input type="text" name="version" id="patch"/>
+        <br/>
+        <input onclick="onGenerateClick()" type="button" value="Generate"/>
+    </form>
+    <p id="output-area"></p>
+</div>
+
+<div>
+    <h2>Bounded range, e.g. 23.16.0 < x <= 23.19.0 </h2>
+    <form>
+        <h3>Minimum Version</h3>
+        <label for="major">major</label>
+        <input type="text" name="version" id="minmajor"/>
+        <br/>
+        <label for="minor">minor</label>
+        <input type="text" name="version" id="minminor"/>
+        <br/>
+        <label for="patch">patch</label>
+        <input type="text" name="version" id="minpatch"/>
+        <br/>
+        <h3>Maximum Version</h3>
+        <label for="major">major</label>
+        <input type="text" name="version" id="maxmajor"/>
+        <br/>
+        <label for="minor">minor</label>
+        <input type="text" name="version" id="maxminor"/>
+        <br/>
+        <label for="patch">patch</label>
+        <input type="text" name="version" id="maxpatch"/>
+        <br/>
+        <input onclick="onBoundedGenerateClick()" type="button" value="Generate"/>
+    </form>
+    <p id="bounded-output-area"></p>
+</div>
+</body>
+</html>
