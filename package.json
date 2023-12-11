@@ -25,6 +25,7 @@
   },
   "scripts": {
     "test": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
   }
 }
