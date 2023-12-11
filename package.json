@@ -9,11 +9,22 @@
   "private": false,
   "devDependencies": {
     "@types/node": "^20.10.4",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^42.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
     "to-regex-range": "^5.0.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "*",
+    "vitest": "^1.0.4"
   },
   "dependencies": {
     "is-number": "^7.0.0"
+  },
+  "scripts": {
+    "test": "vitest",
+    "lint": "eslint ."
   }
 }
