@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import toSemverRange from './index'
+import { toSemverRange } from './index'
 
 test('it should work for semver greater than or equal to', () => {
   let semverRegexStr = toSemverRange({ major: 0, minor: 0, patch: 0 })

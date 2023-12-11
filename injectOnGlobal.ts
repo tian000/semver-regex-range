@@ -1,3 +1,3 @@
-import {toSemverRange} from "./index";
+import { toSemverRange } from './index';
 
-(globalThis as any).toSemverRange = toSemverRange;
+(globalThis as any).toSemverRange = toSemverRange
